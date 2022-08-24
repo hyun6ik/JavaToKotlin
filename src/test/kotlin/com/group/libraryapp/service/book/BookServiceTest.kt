@@ -45,7 +45,12 @@ class BookServiceTest @Autowired constructor(
     fun loanBookTest() {
         //given
         bookRepository.save(Book("이펙티브 코틀린"))
-        val savedUser = userRepository.save(User("현식", null))
+        val savedUser = userRepository.save(
+            User(
+                "현식",
+                null
+            )
+        )
         val request = BookLoanRequest("현식", "이펙티브 코틀린")
         //when
         bookService.loanBook(request)
@@ -54,7 +59,7 @@ class BookServiceTest @Autowired constructor(
         assertThat(results).hasSize(1)
         assertThat(results[0].bookName).isEqualTo("이펙티브 코틀린")
         assertThat(results[0].user.id).isEqualTo(savedUser.id)
-        assertThat(results[0].user.name).isEqualTo(savedUser.name)
+        assertThat(results[0].user.name).isEqualTo("현식")
         assertThat(results[0].isReturn).isFalse
     }
 
@@ -62,8 +67,13 @@ class BookServiceTest @Autowired constructor(
     fun loanBookExceptionTest() {
         //given
         val savedBook = bookRepository.save(Book("이펙티브 코틀린"))
-        val savedUser = userRepository.save(User("현식", null))
-        userLoanHistoryRepository.save(UserLoanHistory(savedUser, savedBook.name, false))
+        val savedJavaUser = userRepository.save(
+            User(
+                "현식",
+                null
+            )
+        )
+        userLoanHistoryRepository.save(UserLoanHistory(savedJavaUser, savedBook.name, false))
         val request = BookLoanRequest("현식", "이펙티브 코틀린")
         //when && then
         assertThrows<IllegalArgumentException> {
@@ -77,8 +87,13 @@ class BookServiceTest @Autowired constructor(
     fun returnBookTest() {
         //given
         val savedBook = bookRepository.save(Book("이펙티브 코틀린"))
-        val savedUser = userRepository.save(User("현식", null))
-        userLoanHistoryRepository.save(UserLoanHistory(savedUser, savedBook.name, false))
+        val savedJavaUser = userRepository.save(
+            User(
+                "현식",
+                null
+            )
+        )
+        userLoanHistoryRepository.save(UserLoanHistory(savedJavaUser, savedBook.name, false))
         val request = BookReturnRequest("현식", "이펙티브 코틀린")
         //when
         bookService.returnBook(request)
