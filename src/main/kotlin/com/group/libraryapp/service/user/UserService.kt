@@ -1,6 +1,7 @@
 package com.group.libraryapp.service.user
 
 import com.group.libraryapp.domain.user.User
+import com.group.libraryapp.domain.user.UserQueryRepository
 import com.group.libraryapp.domain.user.UserRepository
 import com.group.libraryapp.domain.user.loanhistory.UserLoanStatus
 import com.group.libraryapp.dto.user.request.UserCreateRequest
@@ -16,7 +17,8 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = true)
 class UserService(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val userQueryRepository: UserQueryRepository,
 ){
     @Transactional
     fun saveUser(request: UserCreateRequest) {
@@ -42,7 +44,7 @@ class UserService(
     }
 
     fun getUserLoanHistories(): List<UserLoanHistoryResponse> {
-        return userRepository.findAllWithHistories()
+        return userQueryRepository.findAllWithHistories()
             .map(UserLoanHistoryResponse::of)
     }
 }
