@@ -26,8 +26,8 @@ class UserLoanHistory(
         fun fixture(
             user: User,
             bookName: String = "클린 코드",
-            id: Long? = null,
             status: UserLoanStatus = UserLoanStatus.LOANED,
+            id: Long? = null,
         ): UserLoanHistory {
             return UserLoanHistory(
                 user = user,
