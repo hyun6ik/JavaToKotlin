@@ -1,6 +1,7 @@
-package com.group.libraryapp.domain.user
+package com.group.libraryapp.repository.user
 
 import com.group.libraryapp.domain.user.QUser.user
+import com.group.libraryapp.domain.user.User
 import com.group.libraryapp.domain.user.loanhistory.QUserLoanHistory.userLoanHistory
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository
