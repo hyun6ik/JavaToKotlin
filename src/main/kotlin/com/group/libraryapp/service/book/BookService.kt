@@ -44,12 +44,10 @@ class BookService(
     }
 
     fun countLoanedBook(): Int {
-        return userLoanHistoryRepository.findAllByStatus(UserLoanStatus.LOANED).size
+        return userLoanHistoryRepository.countByStatus(UserLoanStatus.LOANED).toInt()
     }
 
     fun getBookStatistics(): List<BookStatResponse> {
-        return bookRepository.findAll()
-            .groupBy { book -> book.type }
-            .map { (type, books) -> BookStatResponse(type, books.size) }
+        return bookRepository.getStats()
     }
 }
